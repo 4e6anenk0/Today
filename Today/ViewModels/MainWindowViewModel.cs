@@ -9,6 +9,6 @@ namespace Today.ViewModels
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-
+        
     }
 }
