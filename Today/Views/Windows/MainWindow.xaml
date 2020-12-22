@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cmd="clr-namespace:Today.Infrastructure.Commands"
         xmlns:vm="clr-namespace:Today.ViewModels"
         xmlns:local="clr-namespace:Today"
         mc:Ignorable="d"
@@ -15,7 +16,12 @@
         <Button DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16" Background="CadetBlue">Добавить поле</Button>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Параметры" FontSize="14">
-                <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"></MenuItem>
+                <!-- <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"></MenuItem> -->
+                <MenuItem Header="Выход">
+                    <MenuItem.Command>
+                        <cmd:CloseAppCommand />
+                    </MenuItem.Command>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <ScrollViewer>
