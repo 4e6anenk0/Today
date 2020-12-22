@@ -14,8 +14,8 @@
     <DockPanel>
         <Button DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16" Background="CadetBlue">Добавить поле</Button>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Настройки" FontSize="14">
-                
+            <MenuItem Header="Параметры" FontSize="14">
+                <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"></MenuItem>
             </MenuItem>
         </Menu>
         <ScrollViewer>
