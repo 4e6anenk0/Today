@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Today.Models
 {
-    class TodoModel
+    internal class TodoModel
     {
         private bool _isDone;
         private string _text;
+        private string _label;
+        private DateTime _endData;
 
         public DateTime DataCreation { get; set; } = DateTime.Now;
 
@@ -23,6 +25,18 @@ namespace Today.Models
         {
             get { return _text; }
             set { _text = value; }
+        }
+
+        public string label
+        {
+            get { return _label; }
+            set { _label = value; }
+        }
+
+        public DateTime endData
+        {
+            get { return _endData; }
+            set { _endData = value; }
         }
     }
 }

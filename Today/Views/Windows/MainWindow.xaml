@@ -4,29 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cmd="clr-namespace:Today.Infrastructure.Commands"
+        xmlns:models="clr-namespace:Today.Models"
         xmlns:vm="clr-namespace:Today.ViewModels"
         xmlns:local="clr-namespace:Today"
         mc:Ignorable="d"
-        Title="Today" Height="450" Width="800" MinWidth="360" MinHeight="250">
+        Title="Today" Height="450" Width="365" MinWidth="365" MinHeight="250">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
-    
+
+    <Window.Resources>
+        <cmd:CloseAppCommand x:Key="CloseAppCommand"/>
+    </Window.Resources>
+
     <DockPanel>
-        <Button DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16" Background="CadetBlue">Добавить поле</Button>
+        <Button DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16" Background="CadetBlue">Добавить заметку</Button>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Параметры" FontSize="14">
                 <!-- <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"></MenuItem> -->
-                <MenuItem Header="Выход">
+                <!-- <MenuItem Header="Выход">
                     <MenuItem.Command>
                         <cmd:CloseAppCommand />
                     </MenuItem.Command>
-                </MenuItem>
+                </MenuItem> -->
+                <MenuItem Header="Выход" Command="{StaticResource CloseAppCommand}"></MenuItem>
             </MenuItem>
         </Menu>
         <ScrollViewer>
             <StackPanel>
-                <TabControl>
+                <TabControl FontSize="14">
                     <TabItem Header="Сегодня">
                         <ListView 
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -49,7 +55,7 @@
                                 </ContextMenu>
                             </ListView.ContextMenu>
                             <ListView.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="models:Todo">
 
                                     <StackPanel Background="#F5F5F5" Width="300" Margin="0,5,0,5">
                                         <Grid Height="25">
@@ -74,7 +80,7 @@
                                                 <ColumnDefinition></ColumnDefinition>
                                                 <ColumnDefinition></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" VerticalAlignment="Center">Создана: 21.12.2020</TextBlock>
+                                            <TextBlock Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="10">Создана: 21.12.2020 22:10</TextBlock>
                                             <DatePicker Grid.Column="1"></DatePicker>
                                         </Grid>
                                     </StackPanel>
