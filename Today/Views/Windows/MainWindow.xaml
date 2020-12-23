@@ -12,15 +12,14 @@
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
-
     <Window.Resources>
         <cmd:CloseAppCommand x:Key="CloseAppCommand"/>
     </Window.Resources>
 
     <DockPanel>
-        <Button DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16" Background="CadetBlue">Добавить заметку</Button>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Параметры" FontSize="14">
+        <Button DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16">Добавить заметку</Button>
+        <Menu DockPanel.Dock="Top" FontSize="14">
+            <MenuItem Header="Параметры">
                 <!-- <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"></MenuItem> -->
                 <!-- <MenuItem Header="Выход">
                     <MenuItem.Command>
@@ -28,6 +27,13 @@
                     </MenuItem.Command>
                 </MenuItem> -->
                 <MenuItem Header="Выход" Command="{StaticResource CloseAppCommand}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Опции">
+                <MenuItem Header="Удалить все заметки на сегодня"></MenuItem>
+                <MenuItem Header="Удалить все"></MenuItem>
+                <MenuItem Header="Очистить неактивные заметки"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="О программе">
             </MenuItem>
         </Menu>
         <ScrollViewer>
@@ -55,7 +61,7 @@
                                 </ContextMenu>
                             </ListView.ContextMenu>
                             <ListView.ItemTemplate>
-                                <DataTemplate DataType="models:Todo">
+                                <DataTemplate DataType="models:TodoModel">
 
                                     <StackPanel Background="#F5F5F5" Width="300" Margin="0,5,0,5">
                                         <Grid Height="25">
@@ -80,8 +86,11 @@
                                                 <ColumnDefinition></ColumnDefinition>
                                                 <ColumnDefinition></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="10">Создана: 21.12.2020 22:10</TextBlock>
-                                            <DatePicker Grid.Column="1"></DatePicker>
+                                            <TextBlock Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14">
+                                            21.12.2020 22:10
+                                            </TextBlock>
+                                            <DatePicker Grid.Column="1" ToolTip="Дата окончания">
+                                            </DatePicker>
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>

@@ -15,25 +15,25 @@ namespace Today.Models
 
         public DateTime DataCreation { get; set; } = DateTime.Now;
 
-        public bool isDone
+        public bool IsDone
         {
             get { return _isDone; }
             set { _isDone = value; }
         }
 
-        public string text
+        public string Text
         {
             get { return _text; }
             set { _text = value; }
         }
 
-        public string label
+        public string Label
         {
             get { return _label; }
             set { _label = value; }
         }
 
-        public DateTime endData
+        public DateTime EndData
         {
             get { return _endData; }
             set { _endData = value; }
