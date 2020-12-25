@@ -40,10 +40,9 @@
             <StackPanel>
                 <TabControl FontSize="14">
                     <TabItem Header="Сегодня">
-                        <ListView 
+                        <ListView ItemTemplate="{StaticResource TodayTodoCard}"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Disabled">
-
                             <ListView.Template>
                                 <ControlTemplate>
                                     <ItemsPresenter></ItemsPresenter>
@@ -60,66 +59,91 @@
                                     <MenuItem Header="Выбрать метку"></MenuItem>
                                 </ContextMenu>
                             </ListView.ContextMenu>
-                            <ListView.ItemTemplate>
-                                <DataTemplate DataType="models:TodoModel">
-
-                                    <StackPanel Background="#F5F5F5" Width="300" Margin="0,5,0,5">
-                                        <Grid Height="25">
-                                        </Grid>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                                <ColumnDefinition Width="8*"></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <CheckBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <CheckBox.ToolTip>
-                                                    Выполнить
-                                                </CheckBox.ToolTip>
-                                            </CheckBox>
-                                            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Margin="35,0,10,0" VerticalAlignment="Center"></TextBox>
-                                        </Grid>
-                                        <Grid Height="25" Margin="10">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14">
-                                            21.12.2020 22:10
-                                            </TextBlock>
-                                            <DatePicker Grid.Column="1" ToolTip="Дата окончания">
-                                            </DatePicker>
-                                        </Grid>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
-                            <Grid />
+                            <ListView ItemsSource="{Binding Source={StaticResource TodayTodoCard}}">
+                            </ListView>
                             <Grid />
                             <Grid />
                         </ListView>
                     </TabItem>
-                    <TabItem Header="Завтра">Вторая вкладка</TabItem>
-                    <TabItem Header="Неделя">Вторая вкладка</TabItem>
-                    <TabItem Header="Все">Вторая вкладка</TabItem>
+                    <TabItem Header="Завтра">
+                        <ListView ItemTemplate="{StaticResource TomorrowTodoCard}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <ItemsPresenter></ItemsPresenter>
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,15,0,5" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Удалить"></MenuItem>
+                                    <MenuItem Header="Выбрать метку"></MenuItem>
+                                </ContextMenu>
+                            </ListView.ContextMenu>
+                            <ListView ItemsSource="{Binding Source={StaticResource TomorrowTodoCard}}">
+                            </ListView>
+                            <Grid />
+                            <Grid />
+                        </ListView>
+                    </TabItem>
+                    <TabItem Header="Неделя">
+                        <ListView ItemTemplate="{StaticResource WeekTodoCard}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <ItemsPresenter></ItemsPresenter>
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,15,0,5" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Удалить"></MenuItem>
+                                    <MenuItem Header="Выбрать метку"></MenuItem>
+                                </ContextMenu>
+                            </ListView.ContextMenu>
+                            <ListView ItemsSource="{Binding Source={StaticResource WeekTodoCard}}">
+                            </ListView>
+                            <Grid />
+                            <Grid />
+                        </ListView>
+                    </TabItem>
+                    <TabItem Header="Все">
+                        <ListView ItemTemplate="{StaticResource TomorrowTodoCard}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <ItemsPresenter></ItemsPresenter>
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,15,0,5" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Удалить"></MenuItem>
+                                    <MenuItem Header="Выбрать метку"></MenuItem>
+                                </ContextMenu>
+                            </ListView.ContextMenu>
+                            <ListView ItemsSource="{Binding Source={StaticResource TomorrowTodoCard}}">
+                            </ListView>
+                            <Grid />
+                            <Grid />
+                        </ListView>
+                    </TabItem>
                 </TabControl>
-               
             </StackPanel>
         </ScrollViewer>  
     </DockPanel>   
