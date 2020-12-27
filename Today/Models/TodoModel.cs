@@ -1,42 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace Today.Models
 {
-    internal class TodoModel
+    public class Todo
     {
-        private bool _isDone;
-        private string _text;
-        private string _label;
-        private DateTime _endData;
-
+        
         public DateTime DataCreation { get; set; } = DateTime.Now;
 
-        public bool IsDone
+        public bool IsDone { get; set; }
+
+        [StringLength(200)]
+        public string Text { get; set; }
+
+        public DateTime? EndData { get; set; }
+
+        public int? LabelId { get; set; }
+
+        public Label Label { get; set; }
+
+        public int? ColorId { get; set; }
+
+        public ColorData ColorData { get; set; }
+
+    }
+
+    public class Label
+    {
+        public int LabelId { get; set; }
+
+        [StringLength(30)]
+        public string LabelText { get; set; }
+
+        public int Prority { get; set; }
+
+        public virtual ICollection<Todo> Todos { get; set; }
+
+        public Label()
         {
-            get { return _isDone; }
-            set { _isDone = value; }
+            Todos = new List<Todo>();
+        }
+    }
+
+
+    public class ColorData
+    {
+        public int ColorId { get; set; }
+
+        public string Name { get; set; }
+
+        public virtual ICollection<Todo> Todos { get; set; }
+
+        public ColorData()
+        {
+            Todos = new List<Todo>();
         }
 
-        public string Text
+        public Int32 Argb
         {
-            get { return _text; }
-            set { _text = value; }
+            get
+            {
+                return Color.ToArgb();
+            }
+            set
+            {
+                Color = Color.FromArgb(value);
+            }
         }
 
-        public string Label
-        {
-            get { return _label; }
-            set { _label = value; }
-        }
-
-        public DateTime EndData
-        {
-            get { return _endData; }
-            set { _endData = value; }
-        }
+        [NotMapped]
+        public Color Color { get; set; }
     }
 }
