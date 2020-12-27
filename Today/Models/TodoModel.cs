@@ -13,7 +13,8 @@ namespace Today.Models
 {
     public class Todo
     {
-        
+        public int TodoId { get; set; }
+
         public DateTime DataCreation { get; set; } = DateTime.Now;
 
         public bool IsDone { get; set; }
@@ -27,7 +28,7 @@ namespace Today.Models
 
         public Label Label { get; set; }
 
-        public int? ColorId { get; set; }
+        public int? ColorDataId { get; set; }
 
         public ColorData ColorData { get; set; }
 
@@ -53,7 +54,7 @@ namespace Today.Models
 
     public class ColorData
     {
-        public int ColorId { get; set; }
+        public int ColorDataId { get; set; }
 
         public string Name { get; set; }
 

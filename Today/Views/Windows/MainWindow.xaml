@@ -6,18 +6,21 @@
         xmlns:cmd="clr-namespace:Today.Infrastructure.Commands"
         xmlns:models="clr-namespace:Today.Models"
         xmlns:vm="clr-namespace:Today.ViewModels"
+        xmlns:conv="clr-namespace:Today.Views.Converters"
         xmlns:local="clr-namespace:Today"
         mc:Ignorable="d"
-        Title="Today" Height="450" Width="365" MinWidth="365" MinHeight="250">
+        Title="{Binding Title}" Height="450" Width="365" MinWidth="365" MinHeight="250"     
+        >
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
     <Window.Resources>
         <cmd:CloseAppCommand x:Key="CloseAppCommand"/>
+        <conv:DateTimeConverter x:Key="DateTimeConverter" />
     </Window.Resources>
 
     <DockPanel>
-        <Button DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16">Добавить заметку</Button>
+        <Button Command="{Binding AddBlankTodoCommand, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16">Добавить заметку</Button>
         <Menu DockPanel.Dock="Top" FontSize="14">
             <MenuItem Header="Параметры">
                 <!-- <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"></MenuItem> -->
@@ -40,9 +43,12 @@
             <StackPanel>
                 <TabControl FontSize="14">
                     <TabItem Header="Сегодня">
-                        <ListView ItemTemplate="{StaticResource TodayTodoCard}"
+                        <ListView
+                            ItemsSource="{Binding Todos}"
+                            SelectedItem="{Binding SelectedTodo, UpdateSourceTrigger=PropertyChanged}"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    
                             <ListView.Template>
                                 <ControlTemplate>
                                     <ItemsPresenter></ItemsPresenter>
@@ -55,14 +61,44 @@
                             </ListView.ItemsPanel>
                             <ListView.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Удалить"></MenuItem>
+                                    <MenuItem Header="Удалить" Command="{Binding DeleteTodoCommand}"></MenuItem>
                                     <MenuItem Header="Выбрать метку"></MenuItem>
                                 </ContextMenu>
                             </ListView.ContextMenu>
-                            <ListView ItemsSource="{Binding Source={StaticResource TodayTodoCard}}">
-                            </ListView>
-                            <Grid />
-                            <Grid />
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Background="#F5F5F5" Width="300" Margin="0,5,0,5">
+                                        <Grid Height="25">
+                                        </Grid>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30"></ColumnDefinition>
+                                                <ColumnDefinition Width="8*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox IsChecked="{Binding IsDone}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <CheckBox.ToolTip>
+                                                    Выполнить
+                                                </CheckBox.ToolTip>
+                                            </CheckBox>
+                                            <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Margin="35,0,10,0" VerticalAlignment="Center"></TextBox>
+                                        </Grid>
+                                        <Grid Height="25" Margin="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding DataCreation, Converter={StaticResource DateTimeConverter}}" Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="14">
+                                            </TextBlock>
+                                            <DatePicker SelectedDate="{Binding EndData}" Grid.Column="1" ToolTip="Дата окончания">
+                                            </DatePicker>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </TabItem>
                     <TabItem Header="Завтра">

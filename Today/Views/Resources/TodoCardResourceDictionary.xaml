@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:Today.Views.Resources">
 
 
-    <DataTemplate x:Key="TodayTodoCard" DataType="models:TodoModel">
+    <DataTemplate x:Key="TodayTodoCard" DataType="x:Type vm:MainWindowViewModel">
 
         <StackPanel Background="#F5F5F5" Width="300" Margin="0,5,0,5">
             <Grid Height="25">
@@ -21,7 +21,7 @@
                         Выполнить
                     </CheckBox.ToolTip>
                 </CheckBox>
-                <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Margin="35,0,10,0" VerticalAlignment="Center"></TextBox>
+                <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Margin="35,0,10,0" VerticalAlignment="Center"></TextBox>
             </Grid>
             <Grid Height="25" Margin="10">
                 <Grid.ColumnDefinitions>
