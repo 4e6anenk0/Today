@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Today.Infrastructure.Commands;
 using Today.Models;
 using Today.Services;
@@ -17,7 +19,9 @@ namespace Today.ViewModels
     internal class MainWindowViewModel : ViewModelBase
     {
         private string _title = "Today";
+       
         private ObservableCollection<Todo> _todos;
+        
         private Todo _selectedTodo;
 
         public ObservableCollection<Todo> Todos
@@ -26,7 +30,6 @@ namespace Today.ViewModels
             set { Set(ref _todos, value); }
         }
 
-        
         public Todo SelectedTodo
         {
             get { return _selectedTodo; }
@@ -36,17 +39,13 @@ namespace Today.ViewModels
             }
         }
 
-        private void GetAllTodos()
-        {
-            _todos = DataFactory.GetAllTodos();
-        }
+    
 
-        private void UpdateCollection()
-        {
-            ObservableCollection<Todo> updateTodoCollection = DataFactory.GetAllTodos();
-            _todos.Clear();
-        }
-       
+        //private void GetAllTodos()
+        //{
+        //    _todos = DataFactory.GetAllTodos();
+        //}
+
 
         public string Title
         {
@@ -54,9 +53,38 @@ namespace Today.ViewModels
             set => Set(ref _title, value);
         }
 
-       
+        private string _text;
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                if(_selectedTodo.Text != value) { 
+                Set(ref _text, value);
+                }
+            }
+        }
 
-       
+        
+
+        private bool _isDone;
+        public bool IsDone
+        {
+            get { return _isDone; }
+            set { Set(ref _isDone, value); }
+        }
+
+
+        private DateTime _dataCreation;
+        public DateTime DataCreation
+        {
+            get { return _dataCreation; }
+            set { Set(ref _dataCreation, value); }
+        }
+
+
+
+
         // -----------------------------------------------------------------------------------------------------
         #region Команды
 
@@ -65,7 +93,7 @@ namespace Today.ViewModels
 
         private void OnCloseAppCommandExecuted(object p)
         {
-           
+            
             Application.Current.Shutdown();
         }
 
@@ -96,10 +124,8 @@ namespace Today.ViewModels
         private void OnAddBlankTodoCommandExecuted(object p)
         {
             var blankTodo = new Todo();
-            //Todos.Add(blankTodo);
+            Todos.Add(blankTodo);
             DataFactory.AddTodo(blankTodo);
-            
-            
         }
 
         private bool CanAddBlankTodoCommandExecute(object p)
@@ -109,30 +135,53 @@ namespace Today.ViewModels
 
         #endregion
 
+        //#region TextBoxIsChangedCommand
+
+        //public ICommand TextBoxIsChangedCommand { get; }
+
+        //private void OnTextBoxIsChangedCommandExecuted(object p)
+        //{
+        //    DataFactory.Update(_isChangedTodo);
+        //}
+
+        //private bool CanTextBoxIsChangedCommandExecute(object p)
+        //{
+        //   return (_text as string) != "";
+        //}
+
+        #region SaveTodoCommand
+
+        public ICommand SaveTodoCommand { get; }
+
+        private void OnSaveTodoCommandExecuted(object p)
+        {
+            DataFactory.UpdateTodo(_selectedTodo);
+            
+        }
+
+        private bool CanSaveTodoCommandExecute(object p)
+        {
+            return true;
+        }
+
+        #endregion
+
+
+        //#endregion
+
         #endregion
         // -----------------------------------------------------------------------------------------------------
 
         public MainWindowViewModel()
         {
-            using (TodoDBContext context = new TodoDBContext())
-            {
-                //Todo todo1 = new Todo();
-                //ColorData green = new ColorData();
-                //green.Color = Color.Green;
-                //todo1.ColorData = green;
-                //todo1.EndData = DateTime.Now;
-                //todo1.IsDone = true;
-                //todo1.Text = "Cдать C#";
-                //Label newL = new Label();
-                //newL.LabelText = "Вуз";
-                //newL.Prority = 1;
-                //todo1.Label = newL;
+           
 
-                //context.Todos.Add(todo1);
-                //context.SaveChanges();
-            }
+            var db = new TodoDBContext();
+            db.Todos.Load();
 
-            this.GetAllTodos();
+            //this.GetAllTodos();
+
+            this.Todos = db.Todos.Local;
 
             // -----------------------------------------------------------------------------------------------------
             #region Команды
@@ -140,6 +189,8 @@ namespace Today.ViewModels
             CloseAppCommand = new LambdaCommand(OnCloseAppCommandExecuted, CanCloseAppCommandExecute);
             DeleteTodoCommand = new LambdaCommand(OnDeleteTodoCommandExecuted, CanDeleteTodoCommandExecute);
             AddBlankTodoCommand = new LambdaCommand(OnAddBlankTodoCommandExecuted, CanAddBlankTodoCommandExecute);
+            //TextBoxIsChangedCommand = new LambdaCommand(OnTextBoxIsChangedCommandExecuted, CanTextBoxIsChangedCommandExecute);
+            SaveTodoCommand = new LambdaCommand(OnSaveTodoCommandExecuted, CanSaveTodoCommandExecute);
             #endregion
             // -----------------------------------------------------------------------------------------------------
         }

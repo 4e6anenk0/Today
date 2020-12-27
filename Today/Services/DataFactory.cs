@@ -21,6 +21,7 @@ namespace Today.Services
             }
         }
 
+
         public static void AddTodo(Todo todo)
         {
             using (var context = new TodoDBContext())
@@ -39,13 +40,16 @@ namespace Today.Services
             }
         }
 
-        public static void Update<TEntity>(TEntity entity) where TEntity : class
+        public static void UpdateTodo(Todo todo)
         {
             using (var context = new TodoDBContext())
             {
-                context.Database.Log = (s => System.Diagnostics.Debug.WriteLine(s));
-
-                context.Entry(entity).State = EntityState.Modified;
+                var todoToUpdate = context.Todos.Find(todo.TodoId);
+                todoToUpdate.Text = todo.Text;
+                todoToUpdate.IsDone = todo.IsDone;
+                todoToUpdate.Label = todo.Label;
+                todoToUpdate.ColorData = todo.ColorData;
+                todoToUpdate.EndData = todo.EndData;
                 context.SaveChanges();
             }
         }

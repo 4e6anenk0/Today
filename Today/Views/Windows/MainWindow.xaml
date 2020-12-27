@@ -17,10 +17,20 @@
     <Window.Resources>
         <cmd:CloseAppCommand x:Key="CloseAppCommand"/>
         <conv:DateTimeConverter x:Key="DateTimeConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
 
-    <DockPanel>
-        <Button Command="{Binding AddBlankTodoCommand, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Bottom" Height="40" FontWeight="Bold" FontSize="16">Добавить заметку</Button>
+    <DockPanel >
+        <StackPanel DockPanel.Dock="Bottom">
+
+            <Button Command="{Binding SaveTodoCommand}" Height="40" FontWeight="Bold" FontSize="16">Сохранить</Button>
+            <Button Command="{Binding AddBlankTodoCommand, UpdateSourceTrigger=PropertyChanged}" Height="40" FontWeight="Bold" FontSize="16">Добавить заметку</Button>
+
+            
+        </StackPanel>
+       
+            
+        
         <Menu DockPanel.Dock="Top" FontSize="14">
             <MenuItem Header="Параметры">
                 <!-- <MenuItem Header="Выход" Command="{Binding CloseAppCommand}"></MenuItem> -->
@@ -84,7 +94,7 @@
                                                     Выполнить
                                                 </CheckBox.ToolTip>
                                             </CheckBox>
-                                            <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Margin="35,0,10,0" VerticalAlignment="Center"></TextBox>
+                                            <TextBox SelectedText="" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Margin="35,0,10,0" VerticalAlignment="Center"></TextBox>
                                         </Grid>
                                         <Grid Height="25" Margin="10">
                                             <Grid.ColumnDefinitions>
@@ -96,11 +106,14 @@
                                             <DatePicker SelectedDate="{Binding EndData}" Grid.Column="1" ToolTip="Дата окончания">
                                             </DatePicker>
                                         </Grid>
+                                        
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
                     </TabItem>
+                    
+                    
                     <TabItem Header="Завтра">
                         <ListView ItemTemplate="{StaticResource TomorrowTodoCard}"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -153,6 +166,8 @@
                             <Grid />
                         </ListView>
                     </TabItem>
+                    
+                    
                     <TabItem Header="Все">
                         <ListView ItemTemplate="{StaticResource TomorrowTodoCard}"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
